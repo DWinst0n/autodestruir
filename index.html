@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autodestruição</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            margin: 0;
+            color: white;
+            font-family: Arial, sans-serif;
+            flex-direction: column;
+        }
+        #explosao {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #explosao video, #explosao img {
+            max-width: 100vh;
+            height: auto;
+        }
+        .botão{
+            padding: 1% 5% 1% 5%;
+            border-radius: 0.5em;
+            background-color: rgb(139, 15, 15);
+            color: black;
+            border-color: white;
+            border-style: double;
+            font-size: 3rem;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <button id="btnAutodestruir" class="botão">Iniciar Autodestruição</button>
+    <div id="explosao">
+        <video id="videoExplosao" src="6Iu.mp4" type="video/mp4" preload="auto"></video>
+        <img src="bomba.gif" alt="Bomba" style="max-width: 300px; margin-top: 10px;">
+        <audio id="audioExplosao" preload="auto">
+            <source src="PTT-20241011-WA0013_11-10-24_17-45-02-190.mp3" type="audio/mpeg">
+            Seu navegador não suporta o elemento de áudio.
+        </audio>
+    </div>
+
+    <script>
+        document.getElementById("btnAutodestruir").addEventListener("click", function() {
+            var confirmado = confirm("Você realmente confirma isso? Aperte ok para confirmar essa ação irreversível");
+            if (confirmado) {
+                this.style.display = "none"; // Oculta o botão
+                var explosaoDiv = document.getElementById("explosao");
+                explosaoDiv.style.display = "block";
+                var audio = document.getElementById("audioExplosao");
+                audio.currentTime = 0;
+                audio.play().catch(function(error) {
+                    console.error("Erro ao reproduzir áudio:", error);
+                });
+                var video = document.getElementById("videoExplosao");
+                video.currentTime = 0;
+                video.requestFullscreen();
+                video.play().catch(function(error) {
+                    console.error("Erro ao reproduzir vídeo:", error);
+                });
+                video.onended = function() {
+                    explosaoDiv.style.display = "none";
+                };
+            }
+        });
+    </script>
+</body>
+</html>
